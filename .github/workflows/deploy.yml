@@ -1,0 +1,42 @@
+# Simulação da esteira (ENGPDP-19852): deploy não-canary, com aprovação no environment.
+# O título do run leva a CTASK; a tela de Rollout usa isso para achar o run.
+name: Deploy
+run-name: Deploy ${{ github.event.repository.name }} - ${{ inputs.change_task }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      change_task:
+        description: Número da Change Task (CTASK)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Build ${{ github.event.repository.name }} para ${{ inputs.change_task }}"
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Testes ok"
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    # Configure Required reviewers neste environment (Settings > Environments).
+    environment: producao
+    steps:
+      - run: echo "Deploy aprovado, publicando ${{ github.event.repository.name }}"
+
+  verify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Verificação pós-deploy ok"

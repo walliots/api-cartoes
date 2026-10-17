@@ -1,0 +1,9 @@
+# Lido pela esteira/integração para decidir a ferramenta de rollout da CTASK.
+# canary.enabled=false -> deploy pelo GitHub Actions (jobs com aprovação de environment)
+name: api-cartoes
+image:
+  repository: ghcr.io/walliots/api-cartoes
+  tag: main
+strategy:
+  canary:
+    enabled: false
