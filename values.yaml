@@ -1,9 +1,11 @@
-# Lido pela esteira/integração para decidir a ferramenta de rollout da CTASK.
-# canary.enabled=false -> deploy pelo GitHub Actions (jobs com aprovação de environment)
-name: api-cartoes
+# values.yaml do serviço — a esteira lê daqui e registra no ServiceNow.
+# strategy.canary.enabled decide a origem do deploy na tela:
+#   true  -> Argo CD (Rollout canary)
+#   false -> GitHub (jobs de deploy com aprovação no environment)
+app:
+  name: api-cartoes
 image:
-  repository: ghcr.io/walliots/api-cartoes
-  tag: main
+  repository: argoproj/rollouts-demo
 strategy:
   canary:
     enabled: false
