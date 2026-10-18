@@ -4,6 +4,7 @@
 #   3. canary = true  -> atualiza a imagem em k8s/rollout.yaml; o Argo CD faz o canary
 #      canary = false -> segue os jobs de deploy do GitHub, com aprovação no environment "producao"
 #
+#00
 # Secrets do repositório: SN_INSTANCE (ex. dev436806.service-now.com), SN_USER, SN_PASSWORD
 name: Deploy
 run-name: Deploy ${{ github.event.repository.name }} ${{ inputs.versao }}
